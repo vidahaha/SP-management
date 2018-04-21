@@ -14,6 +14,14 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
+  },
+
+  mounted () {
+    this.axios.get('http://localhost:7001/login').then(function(res){
+      console.log(res.data)
+    }).catch(function(err){
+      console.log(err)
+    });
   }
 }
 </script>

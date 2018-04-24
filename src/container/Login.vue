@@ -1,16 +1,15 @@
 <template>
     <div class="login-wrap">
         <el-container>
-            <el-header height="84px">
-                <div class="logo"></div>
-                <h1>华中农业大学社会实践管理系统</h1>
-                <el-button type="primary" class="login" @click="logout" v-if="isLogin">退出</el-button>    
-                <el-button type="primary" class="login" @click="login" v-else>登录</el-button>            
-            </el-header>
+            <Header :LoginModalPop.sync="LoginModalPop" :isLogin.sync="isLogin" :name.sync="name"></Header>
             <el-main>
                 <div class="background">
                     <div class="slogan"></div>
-                    <el-button type="primary" class="reg" @click="reg">
+                    <el-button type="primary" class="reg" v-if="isLogin">
+                        <router-link to="/public">查看公示</router-link>
+                        <i class="el-icon-arrow-right"></i>
+                    </el-button>
+                    <el-button type="primary" class="reg" @click="reg" v-else>
                         立即注册！
                         <i class="el-icon-arrow-right"></i>
                     </el-button>
@@ -23,7 +22,7 @@
                                 </p>
                                 <div class="more">
                                     <i class="el-icon-info"></i>
-                                    <a>点击此处查看</a>
+                                    <router-link to="/public">点击此处查看</router-link>
                                 </div>
                             </div>
                         </el-col>
@@ -73,6 +72,7 @@
 </template>
 
 <script>
+    import Header from "@/components/Header";    
     import LoginModal from "@/components/LoginModal";
     import RegModal from "@/components/RegModal";    
 
@@ -80,8 +80,8 @@
         name: "login",
         data() {
             return {
-                isLogin: false,
-                name: '',
+                isLogin: true,
+                name: '111',
                 id: '',
                 LoginModalPop: false,
                 RegModalPop: false
@@ -94,13 +94,6 @@
                 this.name = state.name,
                 this.id = state.id
             },
-            login() {
-                this.LoginModalPop = true;
-            },
-
-            logout() {
-                
-            },
 
             reg() {
                 this.RegModalPop = true;
@@ -108,19 +101,13 @@
         },
 
         components: {
+            Header,
             LoginModal,
             RegModal
         },
 
         mounted() {
-            this.axios
-                .get("http://localhost:7001/login")
-                .then(function(res) {
-                    console.log(res.data);
-                })
-                .catch(function(err) {
-                    console.log(err);
-                });
+            
         }
     };
 </script>
@@ -129,26 +116,7 @@
     .el-container {
         font-size: 16px;
         font-family: "Microsoft YaHei";
-    }
-
-    .el-header {
-        background: #f5f7fad1;
-        box-shadow: inset #c4c7ce 2px -4px 4px 0px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        .logo {
-            background: url("/static/image/logo.png") no-repeat;
-            height: 67px;
-            width: 67px;
-            background-size: cover;
-        }
-        h1 {
-            color: #18157c;
-            letter-spacing: 3px;
-            font-weight: 400;
-        }
-        .login {}
+            flex-direction: column;
     }
 
     .el-main {
@@ -175,7 +143,12 @@
         .reg {
             font-size: 20px;
             letter-spacing: 3px;
-            animation: fadeInLeft 1.5s ease;            
+            animation: fadeInLeft 1.5s ease;  
+            a {
+                &:hover {
+                    text-decoration: none;
+                }
+            }          
         }
         .options {
             width: 100%;

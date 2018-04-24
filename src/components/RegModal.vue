@@ -1,6 +1,6 @@
 <template>
-    <transition name="LoginModal">
-        <div class="modal-wrap" v-if="LoginModalPop">
+    <transition name="RegModal">
+        <div class="modal-wrap" v-if="RegModalPop">
             <div class="mask" @click="close"></div>
             <el-form class="content" :modal="form" label-width="80px" label-suffix=":">
                 <i class="close el-icon-close" @click="close"></i>
@@ -19,9 +19,11 @@
                 <el-form-item label="密码">
                     <el-input placeholder="请输入密码" prefix-icon="el-icon-star-off" v-model="form.password" type="password"></el-input>
                 </el-form-item>
+                <el-form-item label="确认密码">
+                    <el-input placeholder="请确认密码" prefix-icon="el-icon-star-off" v-model="form.password" type="password"></el-input>
+                </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="onSubmit">登录</el-button>
-                    <el-button type="primary" class="reg" @click="reg">没有账号？立即注册</el-button>
+                    <el-button type="primary" @click="onSubmit">立即注册</el-button>
                     <el-button @click="close">取消</el-button>
                 </el-form-item>
             </el-form>
@@ -31,15 +33,12 @@
 
 <script>
     export default {
-        name: "LoginModal",
-        props:['LoginModalPop'],
+        name: "RegModal",
+        props:['RegModalPop'],
         data() {
             return {
-                isLogin: false,
-                name: '',
-                id: '',
                 form: {
-                    type: -1, // 0学生1老师
+                    type: 0, // 0学生1老师
                     name: '',
                     id: '',
                     password: ''
@@ -49,47 +48,10 @@
 
         methods: {
             close () {
-                this.$emit("update:LoginModalPop", false)
-            },
-            reg () {
-                this.$emit("update:LoginModalPop", false)   
-                this.$emit("update:RegModalPop", true)                                
+                this.$emit("update:RegModalPop", false)
             },
             onSubmit () {
 
-                let self = this;
-                let {type, name, id, password}  = this.form;
-
-                type == '学生' ? type = 0 : type = 1;
-                if ( name == '' || id == '' || password == ''  ) {
-                    alert("请填写完整");
-                    return false;
-                }
-
-                this.axios.defaults.withCredentials = true
-
-                this.axios
-                .post("http://localhost:7001/login", {
-                    type,
-                    name,
-                    id,
-                    password
-                })
-                .then(function(res) {
-                    if (res.status) {
-                        self.$emit("update", {
-                            isLogin: true,
-                            name: self.form.name,
-                            id: self.form.id
-                        });                      
-                    } else {
-                        alert("登录失败！请检查信息填写无误");
-                        return false;
-                    }
-                })
-                .catch(function(err) {
-                    console.log(err);
-                });
             }
         }
     };
@@ -128,7 +90,7 @@
         transform: translate(-50%, -50%);
         background-color: #fff;
         width: 500px;
-        height: 360px;
+        height: 420px;
         border: 1px solid #666;
         border-radius: 20px;
         padding: 30px;

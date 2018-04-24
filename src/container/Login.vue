@@ -4,7 +4,8 @@
             <el-header height="84px">
                 <div class="logo"></div>
                 <h1>华中农业大学社会实践管理系统</h1>
-                <el-button type="primary" class="login" @click="login">登录</el-button>
+                <el-button type="primary" class="login" @click="logout" v-if="isLogin">退出</el-button>    
+                <el-button type="primary" class="login" @click="login" v-else>登录</el-button>            
             </el-header>
             <el-main>
                 <div class="background">
@@ -66,25 +67,39 @@
                 </div>
             </el-main>
         </el-container>
-        <LoginModal :LoginModalPop.sync="LoginModalPop"></LoginModal>
+        <LoginModal :RegModalPop.sync="RegModalPop" :LoginModalPop.sync="LoginModalPop" @update="stateChanged($event)"></LoginModal>
+        <RegModal :RegModalPop.sync="RegModalPop" ></RegModal>        
     </div>
 </template>
 
 <script>
     import LoginModal from "@/components/LoginModal";
+    import RegModal from "@/components/RegModal";    
 
     export default {
         name: "login",
         data() {
             return {
+                isLogin: false,
+                name: '',
+                id: '',
                 LoginModalPop: false,
                 RegModalPop: false
             };
         },
 
         methods: {
+            stateChanged( state ) {
+                this.isLogin = state.isLogin,
+                this.name = state.name,
+                this.id = state.id
+            },
             login() {
                 this.LoginModalPop = true;
+            },
+
+            logout() {
+                
             },
 
             reg() {
@@ -93,7 +108,8 @@
         },
 
         components: {
-            LoginModal
+            LoginModal,
+            RegModal
         },
 
         mounted() {
@@ -145,6 +161,7 @@
             background-size: cover;
             position: relative;
             padding-top: 1px;
+            overflow: hidden;
         }
         .slogan {
             margin-top: 80px;
@@ -153,10 +170,12 @@
             height: 200px;
             background-size: cover;
             margin: 80px auto 60px;
+            animation: fadeInLeft 1.5s ease;
         }
         .reg {
             font-size: 20px;
             letter-spacing: 3px;
+            animation: fadeInLeft 1.5s ease;            
         }
         .options {
             width: 100%;
@@ -166,7 +185,7 @@
                 .content {
                     height: 280px;
                     padding: 40px;
-                    box-sizing: border-box;
+                    box-sizing: border-box;                               
                     .title {
                         font-size: 25px;
                         color: #fff;
@@ -187,19 +206,23 @@
             }
             .showTask {
                 background-color: rgb(24, 21, 124);
-                opacity: 0.9;
+                opacity: 0;
+                animation: slideInUp 1s ease forwards; 
             }
             .showMyTask {
                 background-color: rgb(77, 130, 239);
-                opacity: 0.9;
+                opacity: 0;
+                animation: slideInUp 1s 0.2s ease forwards;                 
             }
             .signTask {
                 background-color: rgb(172, 213, 161);
-                opacity: 0.9;
+                opacity: 0;
+                animation: slideInUp 1s 0.4s ease forwards;                                                
             }
             .find {
                 background-color: #bfb348;
-                opacity: 0.9;
+                opacity: 0;
+                animation: slideInUp 1s 0.6s ease forwards;                                                              
             }
         }
     }

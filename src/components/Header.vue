@@ -26,7 +26,8 @@
             },
 
             logout() {
-
+                sessionStorage.clear();
+                location.reload();
             },
         }
     }

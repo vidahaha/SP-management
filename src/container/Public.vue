@@ -4,12 +4,24 @@
             <Header :LoginModalPop.sync="LoginModalPop" :isLogin.sync="isLogin" :name.sync="name"></Header>
             <el-main>
                 <div class="background">
-                    <el-table :data="tableData" stripe >
-                        <el-table-column prop="date" align="center" label="日期" width="180">
+                    <el-table :data="tableData" header-row-class-name="thead" >
+                        <el-table-column prop="id" align="center" label="编号" width="50">
                         </el-table-column>
-                        <el-table-column prop="name" align="center" label="姓名" width="180">
+                        <el-table-column prop="type" align="center" label="类型" width="50">
                         </el-table-column>
-                        <el-table-column prop="address" align="center" label="地址">
+                        <el-table-column prop="team_name" align="center" label="团队名称">
+                        </el-table-column>
+                        <el-table-column prop="task_full_name" align="center" label="课题全称">
+                        </el-table-column>
+                        <el-table-column prop="task_num" align="center" label="团队人数" width="80">
+                        </el-table-column>
+                        <el-table-column prop="task_time" align="center" label="项目时间" width="100">
+                        </el-table-column>
+                        <el-table-column prop="task_place" align="center" label="项目地点" width="100">
+                        </el-table-column>
+                        <el-table-column prop="task_state" align="center" label="项目状态" width="80">
+                        </el-table-column>
+                        <el-table-column prop="reward_state" align="center" label="奖项审批" width="80">
                         </el-table-column>
                     </el-table>
                 </div>
@@ -29,36 +41,20 @@
         name: "login",
         data() {
             return {
-                isLogin: true,
-                name: '111',
+                isLogin: false,
+                name: '',
                 id: '',
                 LoginModalPop: false,
                 RegModalPop: false,
-                tableData: [{
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1517 弄'
-                }, {
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1519 弄'
-                }, {
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1516 弄'
-                }]
+                tableData: []
             };
         },
 
         methods: {
             stateChanged(state) {
-                this.isLogin = state.isLogin,
-                    this.name = state.name,
-                    this.id = state.id
+                this.isLogin = state.isLogin;
+                this.name = state.name;
+                this.id = state.id;
             },
 
             reg() {
@@ -73,7 +69,18 @@
         },
 
         mounted() {
+            self = this;
 
+            this.axios.get("http://localhost:7001/task")
+            .then(function(res) {
+                res = res.data;
+                if ( res.status ) {
+                    self.tableData = res.data;
+                }
+            })
+            .catch(function(err){
+                 console.log(err);                
+            });
         }
     };
 </script>
@@ -100,10 +107,13 @@
         }
         .el-table {
             color: #303133;
-            width: 60%;
+            width: 90%;
             margin: 60px auto;
             border: 2px solid #999;
             border-radius: 10px;
+            .thead {
+                background-color: #edfffe;
+            }
 		}
     }
 </style>

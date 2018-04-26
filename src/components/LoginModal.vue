@@ -76,12 +76,17 @@
                     password
                 })
                 .then(function(res) {
+                    res = res.data;
                     if (res.status) {
                         self.$emit("update", {
                             isLogin: true,
                             name: self.form.name,
-                            id: self.form.id
-                        });                      
+                            id: self.form.id,
+                            type: self.form.type
+                        });   
+
+                        self.$emit("update:LoginModalPop", false)   
+                              
                     } else {
                         alert("登录失败！请检查信息填写无误");
                         return false;

@@ -20,7 +20,7 @@
                     <el-input placeholder="请输入密码" prefix-icon="el-icon-star-off" v-model="form.password" type="password"></el-input>
                 </el-form-item>
                 <el-form-item label="确认密码">
-                    <el-input placeholder="请确认密码" prefix-icon="el-icon-star-off" v-model="form.password" type="password"></el-input>
+                    <el-input placeholder="请确认密码" prefix-icon="el-icon-star-off" v-model="form.repassword" type="password"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="onSubmit">立即注册</el-button>
@@ -51,7 +51,56 @@
                 this.$emit("update:RegModalPop", false)
             },
             onSubmit () {
+                let self = this;
+                let {type, name, id, password, repassword}  = this.form;
 
+                type == '学生' ? type = 0 : type = 1;
+
+                if ( name == '' || id == '' || password == ''  ) {
+                    alert("请填写完整");
+                    return false;
+                }
+
+                if ( password !== repassword ) {
+                    alert("两次密码不一致");
+                    return false;
+                }
+
+                if ( name.length > 4 || password.length < 5 ) {
+                    alert("名字过长或密码过弱");
+                    return false;
+                }
+
+                this.axios
+                .post("http://localhost:7001/reg", {
+                    type,
+                    name,
+                    id,
+                    password
+                })
+                .then(function(res) {
+                    res = res.data;
+                    if (res.status) {
+
+                        self.$emit("update", {
+                            isLogin: true,
+                            name: self.form.name,
+                            id: self.form.id,
+                            type: self.form.type
+                        });   
+
+                        alert(res.msg);
+
+                        self.$emit("update:regModalPop", false)   
+                              
+                    } else {
+                        alert(res.msg);
+                        return false;
+                    }
+                })
+                .catch(function(err) {
+                    console.log(err);
+                });
             }
         }
     };

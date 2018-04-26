@@ -28,37 +28,40 @@
                         </el-col>
                         <el-col :span="6">
                             <div class="showMyTask content">
-                                <p class="title">项目相关内容公示</p>
+                                <p class="title">申请项目</p>
                                 <p class="info">
-                                    各项目答辩时间，地点，经费报销，成绩公布
+                                    选择项目类别，填写申请表格和相关信息
                                 </p>
                                 <div class="more">
                                     <i class="el-icon-info"></i>
-                                    <a>点击此处查看</a>
+                                    <router-link to="/apply" v-if="isLogin">点击此处申请</router-link>
+                                    <a @click="login" v-else>点击此处申请</a>
                                 </div>
                             </div>
                         </el-col>
                         <el-col :span="6">
                             <div class="signTask content">
-                                <p class="title">项目相关内容公示</p>
+                                <p class="title">提交实践报告</p>
                                 <p class="info">
-                                    各项目答辩时间，地点，经费报销，成绩公布
+                                    上传实践报告，由老师进行打分
                                 </p>
                                 <div class="more">
                                     <i class="el-icon-info"></i>
-                                    <a>点击此处查看</a>
+                                    <router-link to="/report" v-if="isLogin">点击此处提交</router-link>
+                                    <a @click="login" v-else>点击此处提交</a>
                                 </div>
                             </div>
                         </el-col>
                         <el-col :span="6">
                             <div class="find content">
-                                <p class="title">项目相关内容公示</p>
+                                <p class="title">奖项申请</p>
                                 <p class="info">
-                                    各项目答辩时间，地点，经费报销，成绩公布
+                                    上传奖项申请报告，由老师进行批准
                                 </p>
                                 <div class="more">
                                     <i class="el-icon-info"></i>
-                                    <a>点击此处查看</a>
+                                    <router-link to="/award" v-if="isLogin">点击此处申请</router-link>
+                                    <a @click="login" v-else>点击此处申请</a>
                                 </div>
                             </div>
                         </el-col>
@@ -77,22 +80,43 @@
     import RegModal from "@/components/RegModal";    
 
     export default {
-        name: "login",
+        name: "Login",
         data() {
             return {
-                isLogin: true,
-                name: '111',
+                isLogin: false ,
+                name: '',
                 id: '',
+                type: 0,
                 LoginModalPop: false,
                 RegModalPop: false
             };
         },
 
+        watch: {
+            isLogin:function(val) {
+               sessionStorage.isLogin = val; 
+            },
+            name:function(val) {
+               sessionStorage.name = val; 
+            },
+            id:function(val) {
+               sessionStorage.id = val; 
+            },
+            type:function(val) {
+               sessionStorage.type = val; 
+            }
+        },
+
         methods: {
-            stateChanged( state ) {
-                this.isLogin = state.isLogin,
-                this.name = state.name,
-                this.id = state.id
+            stateChanged( state ) { 
+                this.isLogin = state.isLogin;
+                this.name = state.name;
+                this.id = state.id;
+                this.type = state.type;               
+            },
+
+            login() {
+                this.LoginModalPop = true;
             },
 
             reg() {
@@ -107,7 +131,10 @@
         },
 
         mounted() {
-            
+            this.isLogin = sessionStorage.isLogin || false;
+            this.name = sessionStorage.name || '';
+            this.id = sessionStorage.id || '';
+            this.type = sessionStorage.type || 0; 
         }
     };
 </script>

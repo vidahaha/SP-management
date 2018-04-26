@@ -4,12 +4,12 @@
             <Header :LoginModalPop.sync="LoginModalPop" :isLogin.sync="isLogin" :name.sync="name"></Header>
             <el-main>
                 <div class="background">
-                    <el-table :data="tableData" stripe style="width: 100%">
-                        <el-table-column prop="date" label="日期" width="180">
+                    <el-table :data="tableData" stripe >
+                        <el-table-column prop="date" align="center" label="日期" width="180">
                         </el-table-column>
-                        <el-table-column prop="name" label="姓名" width="180">
+                        <el-table-column prop="name" align="center" label="姓名" width="180">
                         </el-table-column>
-                        <el-table-column prop="address" label="地址">
+                        <el-table-column prop="address" align="center" label="地址">
                         </el-table-column>
                     </el-table>
                 </div>
@@ -88,7 +88,7 @@
     .el-main {
         padding: 0px;
         .background {
-            background: url("/static/image/back.jpg") no-repeat;
+            background: url("/static/image/back_1.png") no-repeat;
             width: 100%;
             height: 900px;
             background-position: center;
@@ -99,7 +99,11 @@
             // opacity: .5;
         }
         .el-table {
-			color: #303133;
+            color: #303133;
+            width: 60%;
+            margin: 60px auto;
+            border: 2px solid #999;
+            border-radius: 10px;
 		}
     }
 </style>

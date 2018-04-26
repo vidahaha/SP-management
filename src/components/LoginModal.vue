@@ -36,8 +36,6 @@
         data() {
             return {
                 isLogin: false,
-                name: '',
-                id: '',
                 form: {
                     type: -1, // 0学生1老师
                     name: '',
@@ -78,6 +76,12 @@
                 .then(function(res) {
                     res = res.data;
                     if (res.status) {
+
+                        sessionStorage.isLogin = true;
+                        sessionStorage.name = self.form.name;
+                        sessionStorage.id = self.form.id;
+                        sessionStorage.type = self.form.type;
+
                         self.$emit("update", {
                             isLogin: true,
                             name: self.form.name,

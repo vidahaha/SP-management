@@ -5,8 +5,16 @@
         <div class="user" v-if="isLogin">
             <p>欢迎您,{{name}}</p>
             <el-button type="primary" class="login" @click="logout">退出</el-button>
+            <el-button type="primary" class="login" v-if="!onHome">
+                <router-link to="/">返回主页</router-link>
+            </el-button>
         </div>
-        <el-button type="primary" class="login" @click="login" v-else>登录</el-button>
+        <div v-else>
+            <el-button type="primary" class="login" @click="login">登录</el-button>
+            <el-button type="primary" class="login" v-if="!onHome">
+                <router-link to="/">返回主页</router-link>
+            </el-button>  
+        </div>      
     </el-header>
 </template>
 
@@ -16,7 +24,7 @@
 		props:['LoginModalPop', 'isLogin', 'name'],
         data() {
             return {
-                
+                onHome: true
             }
         },
 
@@ -29,6 +37,11 @@
                 sessionStorage.clear();
                 location.reload();
             },
+        },
+
+        mounted() {
+            let hash = location.hash.slice(2);
+            hash == ''? this.onHome = true : this.onHome = false;
         }
     }
 </script>
@@ -48,8 +61,8 @@
         }
         h1 {
             color: #18157c;
-            letter-spacing: 3px;
-            font-weight: 400;
+            letter-spacing: 2px;
+            font-weight: bold;
         }
         .user {
             p {
@@ -61,6 +74,13 @@
                 font-weight: bold;
             }
         }
-        .login {}
+        .login {
+            a {
+                color: #fff;
+            }
+            a:hover {
+                text-decoration: none;
+            }
+        }
     }
 </style>

@@ -5,9 +5,9 @@
             <el-main>
                 <div class="background">
                     <el-table :data="tableData" header-row-class-name="thead" >
-                        <el-table-column prop="id" align="center" label="编号" width="50">
+                        <el-table-column prop="id" align="center" label="编号" width="60">
                         </el-table-column>
-                        <el-table-column prop="type" align="center" label="类型" width="50">
+                        <el-table-column prop="type" align="center" label="类型" width="60">
                         </el-table-column>
                         <el-table-column prop="team_name" align="center" label="团队名称">
                         </el-table-column>
@@ -38,7 +38,7 @@
     import RegModal from "@/components/RegModal";
 
     export default {
-        name: "login",
+        name: "Public",
         data() {
             return {
                 isLogin: false,
@@ -69,6 +69,11 @@
         },
 
         mounted() {
+
+            this.isLogin = sessionStorage.isLogin || false;
+            this.name = sessionStorage.name || '';
+            this.id = sessionStorage.id || '';
+        
             self = this;
 
             this.axios.get("http://localhost:7001/task")

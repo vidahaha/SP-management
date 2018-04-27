@@ -47,7 +47,7 @@
                                 </p>
                                 <div class="more">
                                     <i class="el-icon-info"></i>
-                                    <router-link to="/report" v-if="isLogin">点击此处提交</router-link>
+                                    <router-link to="/submit" v-if="isLogin">点击此处提交</router-link>
                                     <a @click="login" v-else>点击此处提交</a>
                                 </div>
                             </div>
@@ -194,7 +194,7 @@
                     .info {
                         font-size: 18px;
                         color: #fff;
-                        text-align: left;
+                        text-align: center;
                         margin-top: 30px;
                     }
                     .more {

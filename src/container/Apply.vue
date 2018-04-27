@@ -87,7 +87,7 @@
                     <el-form class="btnForm" ref="form">
                         <el-form-item>
                             <el-button type="primary" @click="onSubmit">立即申请</el-button>
-                            <el-button type="warning" @click="onSubmit">重新填写</el-button>
+                            <el-button type="warning" @click="reset">重新填写</el-button>
                         </el-form-item>
                     </el-form>
                 </div>
@@ -154,6 +154,22 @@
 
             removeMember() {
                 this.form.members.pop();
+            },
+
+            reset() {
+                let self = this;
+                Object.keys(this.form).forEach(key => {
+                    let val = self.form[key];
+                    if( val instanceof Array ) {
+                        self.form[key].forEach(function( val ){
+                            Object.keys(val).forEach( function(key) {
+                                val[key] = '';
+                            } );
+                        });
+                    } else {
+                        self.form[key] = '';
+                    }
+                })
             }
         },
 
@@ -209,7 +225,7 @@
             border: 2px solid #999;
             border-radius: 10px;
             width: 70%;
-            background: rgba(200, 206, 239, 0.5);
+            background: rgba(253, 253, 253, 0.53);
             padding: 30px;
             &.memberForm {
                 width: 80%;

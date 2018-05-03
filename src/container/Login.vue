@@ -27,7 +27,17 @@
                             </div>
                         </el-col>
                         <el-col :span="6">
-                            <div class="showMyTask content">
+                            <div class="showMyTask content" v-if="isAdmin">
+                                <p class="title">审批项目</p>
+                                <p class="info">
+                                    查看项目列表，批准项目开展
+                                </p>
+                                <div class="more">
+                                    <i class="el-icon-info"></i>
+                                    <router-link to="/check">点击此处审批</router-link>
+                                </div>
+                            </div>
+                            <div class="showMyTask content" v-else>
                                 <p class="title">申请项目</p>
                                 <p class="info">
                                     选择项目类别，填写申请表格和相关信息
@@ -40,7 +50,17 @@
                             </div>
                         </el-col>
                         <el-col :span="6">
-                            <div class="signTask content">
+                            <div class="signTask content" v-if="isAdmin">
+                                <p class="title">成绩批改</p>
+                                <p class="info">
+                                    查看项目列表，批改项目成绩
+                                </p>
+                                <div class="more">
+                                    <i class="el-icon-info"></i>
+                                    <router-link to="/grade">点击此处审批</router-link>
+                                </div>
+                            </div>
+                            <div class="signTask content" v-else>
                                 <p class="title">提交实践报告</p>
                                 <p class="info">
                                     上传实践报告，由老师进行打分
@@ -53,7 +73,17 @@
                             </div>
                         </el-col>
                         <el-col :span="6">
-                            <div class="find content">
+                            <div class="find content" v-if="isAdmin"> 
+                                <p class="title">审批奖项</p>
+                                <p class="info">
+                                    查看申请列表，批准奖项申请
+                                </p>
+                                <div class="more">
+                                    <i class="el-icon-info"></i>
+                                    <router-link to="/approve">点击此处审批</router-link>
+                                </div>
+                            </div>
+                            <div class="find content" v-else>
                                 <p class="title">奖项申请</p>
                                 <p class="info">
                                     上传奖项申请报告，由老师进行批准
@@ -84,6 +114,7 @@
         data() {
             return {
                 isLogin: false ,
+                isAdmin: true,
                 name: '',
                 id: '',
                 type: 0,

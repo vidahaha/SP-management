@@ -23,6 +23,8 @@
                         </el-table-column>
                         <el-table-column prop="reward_state" align="center" label="奖项审批" width="80">
                         </el-table-column>
+                        <el-table-column prop="grade" align="center" label="成绩" width="80">
+                        </el-table-column>
                     </el-table>
                 </div>
             </el-main>
@@ -76,7 +78,7 @@
         
             self = this;
 
-            this.axios.get("http://localhost:7001/task")
+            this.axios.get(apiHost + "task")
             .then(function(res) {
                 res = res.data;
                 if ( res.status ) {

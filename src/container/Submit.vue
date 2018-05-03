@@ -64,7 +64,7 @@
 
             self = this;
 
-            this.axios.get("http://localhost:7001/task")
+            this.axios.get(apiHost + "task")
                 .then(function(res) {
                     res = res.data;
                     if (res.status) {

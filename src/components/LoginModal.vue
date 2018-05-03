@@ -67,7 +67,7 @@
                 this.axios.defaults.withCredentials = true
 
                 this.axios
-                .post("http://localhost:7001/login", {
+                .post(apiHost + "login", {
                     type,
                     name,
                     id,

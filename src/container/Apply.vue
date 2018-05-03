@@ -116,6 +116,9 @@
                     type: '',
                     task_full_name: '',
                     task_time: '',
+                    task_place: '',
+                    team_name: '',
+                    task_num: 0,
                     members: [{
                         task_member_name: '',
                         task_member_college: '',
@@ -139,7 +142,38 @@
             },
 
             onSubmit() {
-                console.log('submit!');
+                let {type, task_full_name, task_time, task_place, team_name, task_num} = this.form;
+                if ( type == '' 
+                    || task_full_name == '' 
+                    || task_time == '' 
+                    || task_place == '' 
+                    || team_name == '' 
+                    || task_num == '' ) {
+                    this.$alert('请填写完整', {
+                        confirmButtonText: '确定'
+                    })
+                    return false;
+                }
+
+                this.axios
+                .post(apiHost + 'apply', {
+                    type,
+                    task_full_name,
+                    task_time,
+                    task_place,
+                    team_name,
+                    task_num
+                }).then(function(res){
+                    res = res.data;
+                    self.$message({
+                        type: 'success',
+                        message: res.msg,
+                    });
+                }).catch(function(err){
+                    this.$alert(err, {
+                        confirmButtonText: '确定'
+                    });
+                });
             },
 
             addMember() {
@@ -187,7 +221,7 @@
 
             self = this;
 
-            this.axios.get("http://localhost:7001/task")
+            this.axios.get(apiHost + "task")
                 .then(function(res) {
                     res = res.data;
                     if (res.status) {

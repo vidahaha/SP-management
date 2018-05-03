@@ -15,6 +15,7 @@ Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.prototype.axios = axios
 window.$ = $
+window.apiHost = process.env.API_HOST;
 
 /* eslint-disable no-new */
 new Vue({

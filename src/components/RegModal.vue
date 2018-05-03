@@ -72,7 +72,7 @@
                 }
 
                 this.axios
-                .post("http://localhost:7001/reg", {
+                .post(apiHost + "reg", {
                     type,
                     name,
                     id,

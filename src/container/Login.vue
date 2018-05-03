@@ -113,14 +113,19 @@
         name: "Login",
         data() {
             return {
-                isLogin: false ,
-                isAdmin: true,
+                isLogin: false,
                 name: '',
                 id: '',
                 type: 0,
                 LoginModalPop: false,
                 RegModalPop: false
             };
+        },
+
+        computed: {
+            isAdmin() {
+               return this.type == '老师' ? true : false;
+            }
         },
 
         watch: {
